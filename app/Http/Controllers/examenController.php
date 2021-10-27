@@ -15,11 +15,6 @@ class examenController extends Controller
     $examenes = examen::all();
     return $examenes;
   }
-  public function oneExamen(Request $request)
-  {
-    $examenes = examen::where('id',$request->id)->get();
-    return $examenes;
-  }
   public function principal()
   {
     return view('principal');
@@ -28,14 +23,24 @@ class examenController extends Controller
   {
       return view('formularioExamen');
   }
-  public function preguntas($id)
+  public function examen($id)
   {
-    $examen = examen::where('id',$id)->get();
-    $preguntas = pregunta::where('id_examen',$id)->get();
-    return view('preguntas',[
-      'examen' => $examen,
-      'preguntas' => $preguntas,
-    ]);
+      // $idExamen = Crypt::decrypt($id);
+      $examen = examen::where('id',$id)->get();
+      return view('preguntas',[
+        'examen' => $examen,
+      ]);
+  }
+  public function deleteQuest(Request $request)
+  {
+    $preguntas = pregunta::where('id',$request->id)->delete();
+    $opciones = opciones::where('id_quest',$request->id)->delete();
+  }
+
+  public function preguntas(Request $request)
+  {
+    $preguntas = pregunta::where('id_examen',$request->id)->get();
+    return  $preguntas;
   }
   public function falsoverdadero()
   {
@@ -58,6 +63,7 @@ class examenController extends Controller
     $save->tiempo = $request->Etiempo;
     $save->intentos = $request->Eintentos;
     $save->save();
+    return $save;
   }
 
   public function saveQuestFV(Request $request)
@@ -67,7 +73,7 @@ class examenController extends Controller
     $save->tipo = "Falso / Verdadero";
     $save->puntaje = $request->puntaje;
     $save->pregunta = $request->descrip;
-    $save->save();
+    // $save->save();
 
     $saveO = new opciones();
     $saveO->id_quest = $save->id;
@@ -77,7 +83,10 @@ class examenController extends Controller
     $saveO->opc3 = null;
     $saveO->opc4 = null;
     $saveO->selec = null;
-    $saveO->save();
+    // $saveO->save();
+
+    return $save;
+
   }
   public function saveQuestMO(Request $request)
   {
@@ -97,6 +106,8 @@ class examenController extends Controller
     $saveO->opc4 = $request->opc4;
     $saveO->selec = $request->selec;
     $saveO->save();
+
+    return $save;
   }
   public function saveQuestTL(Request $request)
   {
@@ -106,5 +117,7 @@ class examenController extends Controller
     $save->puntaje = $request->puntaje;
     $save->pregunta = $request->descrip;
     $save->save();
+
+    return $save;
   }
 }

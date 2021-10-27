@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-<Preguntas :examen="{{$examen}}" :preguntas="{{$preguntas}}"> </Preguntas>
+<Preguntas :examen="{{$examen}}"> </Preguntas>
 @endsection

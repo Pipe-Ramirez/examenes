@@ -9,7 +9,7 @@ message2<template>
             </div>
           </div>
           <div class="alert alert-danger m-2" role="alert" id="message2">
-            Debes llenar todos los campos
+            Debes llenar todos los campos.
           </div>
           <div class="p-4">
             <div class="row">
@@ -101,14 +101,10 @@ message2<template>
             var message2 = document.getElementById("message2");
             if(int == 0){
               message2.setAttribute("style","display: none;");
-              axios({
-                method: 'post', url: '/saveQuestFV', data: info
-              })
-              .then(function (response) {
+              axios.post('/saveQuestFV', info)
+              .then((response) =>{
+                this.$emit('newQuestFV',response.data);
                 $('#modal1').modal('hide');
-              })
-              .catch(function (error) {
-                alert(error);
               });
             }else{
               message2.setAttribute("style","display: flex;");

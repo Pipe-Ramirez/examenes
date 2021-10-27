@@ -38,28 +38,28 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="examen in preguntas" :key="examen.id">
-                  <td>{{examen.pregunta}}</td>
-                  <td>{{examen.tipo}}</td>
-                  <td>{{examen.puntaje}}</td>
-                  <td>@mdo</td>
+                <tr v-for="(element, index) in preguntas" :key="element.id">
+                  <td>{{element.pregunta}}</td>
+                  <td>{{element.tipo}}</td>
+                  <td>{{element.puntaje}}</td>
+                  <td><button class="btn btn-danger" title="Eliminar" v-on:click="deleteQuest(element.id, index)"> - </button></td>
                 </tr>
               </tbody>
             </table>
           </div>
               <div class="col-md-3">
                 <!-- Modal1 -->
-                <falso-verdadero :examenid="examen[0]['id']"> </falso-verdadero>
+                <falso-verdadero :examenid="examen[0]['id']" @newQuestFV="newQuestFV"> </falso-verdadero>
               </div>
 
               <div class="col-md-3">
                 <!-- Modal2 -->
-                <multiple :examenid="examen[0]['id']"> </multiple>
+                <multiple :examenid="examen[0]['id']" @newQuestM="newQuestM"> </multiple>
               </div>
 
               <div class="col-md-3">
                 <!-- Modal3 -->
-                <texto :examenid="examen[0]['id']"> </texto>
+                <texto :examenid="examen[0]['id']" @newQuestT="newQuestT"> </texto>
               </div>
 
         </div>
@@ -71,9 +71,43 @@
 
 <script>
     export default {
-      props:['examen', 'preguntas'],
-        mounted() {
-            console.log()
+      props:['examen'],
+      data(){
+        return{
+          preguntas: [{
+            'id': "",
+            'id_examen': "",
+            'tipo': "",
+            'puntaje': "",
+            'pregunta': ""
+          }]
         }
+      },
+      mounted() {
+        const info = { id: this.examen[0]['id'] };
+        axios.post('/preguntas', info)
+        .then((response) =>{
+          this.preguntas = response.data
+        });
+      },
+      methods: {
+        newQuestFV(pregunta_nuevo){
+          this.preguntas.push(pregunta_nuevo);
+        },
+        newQuestM(pregunta_nuevo){
+          this.preguntas.push(pregunta_nuevo);
+        },
+        newQuestT(pregunta_nuevo){
+          this.preguntas.push(pregunta_nuevo);
+        },
+        deleteQuest(idQuest, index){
+          const info = { id: idQuest };
+          axios.post('/deleteQuest', info)
+          .then((response) =>{
+            this.preguntas.splice(index,1);
+            console.log(this.preguntas);
+          });
+        }
+      }
     }
-</script>
+  </script>

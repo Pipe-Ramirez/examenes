@@ -9,7 +9,7 @@
             </div>
           </div>
           <div class="alert alert-danger m-2" role="alert" id="message3">
-            Debes llenar todos los campos
+            Debes llenar todos los campos.
           </div>
           <div class="p-3">
             <div class="">
@@ -69,14 +69,10 @@
             var message3 = document.getElementById("message3");
             if(int == 0){
               message3.setAttribute("style","display: none;");
-              axios({
-                method: 'post', url: '/saveQuestTL', data: info
-              })
-              .then(function (response) {
+              axios.post('/saveQuestTL', info)
+              .then((response) =>{
+                this.$emit('newQuestT',response.data);
                 $('#modal3').modal('hide');
-              })
-              .catch(function (error) {
-                alert(error);
               });
             }else {
               message3.setAttribute("style","display: flex;");

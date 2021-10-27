@@ -9,7 +9,7 @@
             </div>
           </div>
           <div class="alert alert-danger m-2" role="alert" id="message1">
-            Debes llenar todos los campos
+            Debes llenar todos los campos.
           </div>
           <div class="row m-1">
             <div class="col-md-6">
@@ -154,14 +154,10 @@
                 puntaje: this.puntaje,
                 descrip: this.descrip
               };
-              axios({
-                method: 'post', url: '/saveQuestMO', data: info
-              })
-              .then(function (response) {
+              axios.post('/saveQuestMO', info)
+              .then((response) =>{
+                this.$emit('newQuestM',response.data);
                 $('#modal2').modal('hide');
-              })
-              .catch(function (error) {
-                alert(error);
               });
             }else{
               message1.setAttribute("style","display: flex;");
