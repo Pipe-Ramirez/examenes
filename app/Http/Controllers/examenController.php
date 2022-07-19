@@ -19,10 +19,6 @@ class examenController extends Controller
   {
     return view('principal');
   }
-  public function nuevoExamen()
-  {
-      return view('formularioExamen');
-  }
   public function examen($id)
   {
       // $idExamen = Crypt::decrypt($id);

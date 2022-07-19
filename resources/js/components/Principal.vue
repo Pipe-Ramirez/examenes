@@ -7,7 +7,7 @@
           <button type="button" class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
             Crear nuevo Examen
           </button>
-          <formulario @new="nuevo"> </formulario>
+          <modal-nuevo-examen @new="nuevo"> </modal-nuevo-examen>
 
           <div class="row justify-content-center">
               <examenes v-for="examen in examenes" :key="examen.id" :examen="examen"> </examenes>
