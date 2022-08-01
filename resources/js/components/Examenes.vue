@@ -1,16 +1,15 @@
 <template>
-  <!-- <div class=""> -->
-    <div class="col-md-2 m-2">
-      <div class="card" style="width:150px !important;">
-        <div class="card-header" style="font-weight: bold;">{{examen.titulo}}</div>
-        <div class="card-body" style="height: 200px; width:120px !important;">
-          <p class="card-text">Tiempo: {{examen.tiempo}}</p>
-          <p class="card-text">Cantidad de intentos: {{examen.intentos}}</p>
-          <a v-bind:href="'/examen/'+ examen.id" class="btn btn-success">Editar</a>
+  <div class="row">
+    <div class="">
+      <div class="card mb-3">
+        <a v-bind:href="'/examen/'+ examen.id" ><div id="titulo" class="p-0 card-header d-flex justify-content-center" style="font-weight: bold;">Examen "{{examen.titulo}}".</div></a>
+        <div class="row">
+          <div class="col-md-6 d-flex justify-content-center"> Tiempo: {{examen.tiempo}} minutos</div>
+          <div class="col-md-6 d-flex justify-content-center"> Cantidad de intentos: {{examen.intentos}} </div>
         </div>
       </div>
     </div>
-  <!-- </div> -->
+  </div>
 
 </template>
 
@@ -18,5 +17,10 @@
     export default {
       props:['examen'],
     }
-
 </script>
+
+<style media="screen">
+  #titulo:hover{
+    background-color: gold;
+  }
+</style>
